@@ -21,6 +21,8 @@ fn input() -> String {
         .expect("input is required")
         .trim();
 
+    
+
     println!("here was your input {:?}", input);
     input.to_string()
 }
@@ -28,9 +30,11 @@ fn input() -> String {
 
 fn list_files() -> io::Result<Vec<String>> {
     fs::read_dir(".")?
+        // its a map for the dir then another map for the files in the dir and them dispkaying them
         .map(|res|res.map(|e|e.path().display().to_string()))
         .collect()
 }
+
 
 fn read_files(word_search: String) -> Result<Vec<MatchedLine>, Box<dyn Error>>{
 
@@ -68,6 +72,10 @@ fn check_sim() {
         println!("default file {:?}", file);
         let start = "";
         let parts: Option<(&str, &str)> = file.split_once('/');
+        // this one splits the at the / so 
+        // ./main.rs 
+        // would just turn into main.rs
+        
         let file_to_search_for = start.to_string() + &file_name;
         println!("file to search {:?}", file_to_search_for);
 
@@ -81,6 +89,8 @@ fn check_sim() {
                 let compare_name_to = _extension;
                 let result: String = compare_name_to
                 .split('.')
+                // this one splits it at .
+                // so now its main.rs -> main
                 .next()
                 .unwrap_or("")
                 .to_string();
