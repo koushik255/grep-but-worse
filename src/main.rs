@@ -57,13 +57,30 @@ fn read_files(word_search: String) -> Result<Vec<MatchedLine>, Box<dyn Error>>{
     Ok(result)
 }
 
-fn random_bs (input : String)  {
+fn random_bs (input : String) -> Result<Vec<String>,String> {
     let files = list_files().unwrap();
-    let new_files: Vec<_>= files.into_iter().filter(|x| x.contains(&input))
-        .map(|x| println! ("hello from random bs{}",x))
+    
+    if input.is_empty(){
+        return Err("Why blank bro".to_string());
+    }
+
+
+    let new_files: Vec<String>= files
+        .into_iter()
+        .filter(|x| x.contains(&input))
+        .map(|x| { 
+            println! ("hello from random bs{}",x);
+            x.to_string()
+            })
         .collect();
 
+      
+    
     println!("{:?}",new_files);
+
+    Ok(new_files)
+
+
 
     
 }
@@ -126,11 +143,13 @@ fn main() {
     println!("Hello, world!");
    
     let word_find = input();
-    random_bs(word_find.clone());
+    let blahbalh = random_bs(word_find.clone())
+        .expect("Error random bs func");
+    println!("{:?}", blahbalh);
     let answers = read_files(word_find)
         .expect("failed to read file");
 
      for (file_name,line_number, line) in answers {
          println!("Line: {}: {} file: {}", line_number, line, file_name);
     }
-}
+} 
