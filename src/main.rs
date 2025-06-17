@@ -53,13 +53,20 @@ fn read_files(word_search: String) -> Result<Vec<MatchedLine>, Box<dyn Error>>{
             .collect();
         result.extend(matched_lines);
         
-    
-
     }
     Ok(result)
 }
 
+fn random_bs (input : String)  {
+    let files = list_files().unwrap();
+    let new_files: Vec<_>= files.into_iter().filter(|x| x.contains(&input))
+        .map(|x| println! ("hello from random bs{}",x))
+        .collect();
 
+    println!("{:?}",new_files);
+
+    
+}
 
 
 // check if file name is simmlar / same as the file
@@ -117,7 +124,9 @@ fn main() {
     check_sim();
     
     println!("Hello, world!");
+   
     let word_find = input();
+    random_bs(word_find.clone());
     let answers = read_files(word_find)
         .expect("failed to read file");
 
