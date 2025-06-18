@@ -168,6 +168,23 @@ fn check_sim() {
     }
 }
 
+fn check_if_empty(answers: Option<Vec<MatchedLine>>) {
+    match answers {
+         Some(results_vec) => {
+             if results_vec.is_empty() {
+                 println!("No matching lines found");
+             } else {
+                 for (file_name, line_number,line) in results_vec {
+                     println!("Line: {} {} file: {}",line_number,line,file_name);
+                 }
+             }
+         }
+         None => {
+             println!("Nothing burger");
+         }
+    }
+}
+
 fn main() {
     check_sim();
 
@@ -178,7 +195,5 @@ fn main() {
     println!("{:?}", blahbalh);
     let answers = read_files(word_find).expect("failed to read file");
 
-    for (file_name, line_number, line) in answers {
-        println!("Line: {}: {} file: {}", line_number, line, file_name);
-    }
+    check_if_empty(Some(answers));
 }
