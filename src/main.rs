@@ -2,10 +2,27 @@ use clap::{command,Arg};
 use std::fs;
 use::std::io;
 use std::error::Error;
+use std::thread;
+use std::time::Duration;
+
+
 
 
 type MatchedLine = (String,usize,String);
 
+
+
+
+
+fn lt() {
+    let handle = thread::spawn( || {
+        println!("Hello from a thread");
+        thread::sleep(Duration::from_secs(1));
+        println!("Thread finished");
+    });
+    handle.join().unwrap();
+    println!("thread all threads done");
+}
 
 fn input() -> String {
     let matches = command!()
@@ -73,16 +90,11 @@ fn random_bs (input : String) -> Result<Vec<String>,String> {
             x.to_string()
             })
         .collect();
-
-      
     
     println!("{:?}",new_files);
 
     Ok(new_files)
 
-
-
-    
 }
 
 
@@ -141,7 +153,7 @@ fn main() {
     check_sim();
     
     println!("Hello, world!");
-   
+    lt();
     let word_find = input();
     let blahbalh = random_bs(word_find.clone())
         .expect("Error random bs func");
